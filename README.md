@@ -1,8 +1,5 @@
 # OpenVPN for Docker
 
-[![Build Status](https://travis-ci.org/Viva-Victoria/diamond-openvpn.svg)](https://travis-ci.org/Viva-Victoria/diamond-openvpn)
-[![ImageLayers](https://images.microbadger.com/badges/image/Viva-Victoria/diamond-openvpn.svg)](https://microbadger.com/#/images/Viva-Victoria/diamond-openvpn)
-
 OpenVPN server in a Docker container complete with an EasyRSA PKI CA.
 
 #### Upstream Links

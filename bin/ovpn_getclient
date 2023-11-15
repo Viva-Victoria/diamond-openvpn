@@ -35,18 +35,25 @@ get_client_config() {
 client
 nobind
 dev $OVPN_DEVICE
-remote-cert-tls server
+remote-cert-tls server"
 
-remote $OVPN_CN $OVPN_PORT $OVPN_PROTO"
+    for cn in "${OVPN_CNS[@]}"
+    do
+        echo "remote $cn $OVPN_PORT $OVPN_PROTO"
+    done
+
     if [ "$OVPN_PROTO" == "udp6" ]; then
         echo "remote $OVPN_CN $OVPN_PORT udp"
     fi
+
     if [ "$OVPN_PROTO" == "tcp6" ]; then
         echo "remote $OVPN_CN $OVPN_PORT tcp"
     fi
+
     for i in "${OVPN_EXTRA_CLIENT_CONFIG[@]}"; do
       echo "$i"
     done
+
     if [ "$mode" == "combined" ]; then
         echo "
 <key>

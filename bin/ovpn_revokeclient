@@ -21,19 +21,13 @@ if [ -z "$EASYRSA_PKI" ]; then
     export EASYRSA_PKI="$OPENVPN/pki"
 fi
 
-cn="$1"
+NAME=${1}
 
-if [ ! -f "$EASYRSA_PKI/private/${cn}.key" ]; then
-    echo "Unable to find \"${cn}\", please try again or generate the key first" >&2
-    exit 1
-fi
+easyrsa --batch revoke "${NAME}"
+rm -rf /etc/openvpn/crl.pem
+rm -rf "pki/reqs/${NAME}.req"
+rm -rf "pki/private/${NAME}.key"
+rm -rf "pki/issued/${NAME}.crt"
 
-revoke_client_certificate(){
-    easyrsa revoke "$1"
-    echo "Generating the Certificate Revocation List :"
-    easyrsa gen-crl
-    cp -f "$EASYRSA_PKI/crl.pem" "$OPENVPN/crl.pem"
-    chmod 644 "$OPENVPN/crl.pem"
-}
-
-revoke_client_certificate "$cn"
+easyrsa gen-crl
+cp /etc/openvpn/pki/crl.pem /etc/openvpn/crl.pem

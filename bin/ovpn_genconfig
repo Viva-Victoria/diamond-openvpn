@@ -146,6 +146,7 @@ OVPN_AUTH=''
 OVPN_CIPHER=''
 OVPN_CLIENT_TO_CLIENT=''
 OVPN_CN=''
+OVPN_CNS=()
 OVPN_COMP_LZO=0
 OVPN_DEFROUTE=1
 OVPN_DEVICE="tun"
@@ -275,6 +276,7 @@ done
 if [[ "${OVPN_SERVER_URL:-}" =~ ^((udp|tcp|udp6|tcp6)://)?([0-9a-zA-Z\.\-]+)(:([0-9]+))?$ ]]; then
     OVPN_PROTO=${BASH_REMATCH[2]};
     OVPN_CN=${BASH_REMATCH[3]};
+    OVPN_CNS=($OVPN_CN)
     OVPN_PORT=${BASH_REMATCH[5]};
 else
     set +x
@@ -285,7 +287,7 @@ fi
 
 # Apply defaults. If dns servers were not defined with -n, use google nameservers
 set +u
-[ -z "$OVPN_DNS_SERVERS" ] && OVPN_DNS_SERVERS=("8.8.8.8" "8.8.4.4")
+[ -z "$OVPN_DNS_SERVERS" ] && OVPN_DNS_SERVERS=("77.88.8.8" "8.8.8.8" "8.8.4.4")
 [ -z "$OVPN_PROTO" ] && OVPN_PROTO=udp
 [ -z "$OVPN_PORT" ] && OVPN_PORT=1194
 set -u
